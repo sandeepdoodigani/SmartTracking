@@ -1,0 +1,55 @@
+<html>
+   
+   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   </head>
+   
+   <body >
+      <div id = "sample" style = "width:100%; height:600px;"></div>
+   </body>
+
+   <script src = "https://maps.googleapis.com/maps/api/js"></script>
+
+
+   <script>
+    $(function(){
+        call_api();
+    setInterval(function () {
+        call_api();
+    }, 5000);
+
+
+
+       
+        
+    });
+
+    function call_api(){
+
+        $.ajax({
+            url: "https://smarttrackingsytem.firebaseio.com/Location.json",
+            success: function(data){
+               // var data = $.parseJSON(data);
+                loadMap(data.latitude,data.longitude);
+            }
+        });
+            
+    }
+
+    function loadMap(latitude,longitude) {
+       
+       var mapOptions = {
+          center:new google.maps.LatLng(latitude, longitude),
+          zoom:10
+       }
+           
+       var map = new google.maps.Map(document.getElementById("sample"),mapOptions);
+       
+       var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(latitude, longitude),
+          map: map,
+       });
+    }
+ </script>
+   
+</html>
